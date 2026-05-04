@@ -1,4 +1,4 @@
-/* Problem: Read a string and check if it is a palindrome using two-pointer comparison.
+/*Problem: Read a string and check if it is a palindrome using two-pointer comparison.
 
 Input:
 - Single line: string s
@@ -13,32 +13,39 @@ level
 Output:
 YES
 
-Explanation: String reads same forwards and backwards */
+Explanation: String reads same forwards and backwards*/
+
 #include <stdio.h>
 #include <string.h>
 
-int main() {
-    char s[100];
-    scanf("%s", s);
+int main()
+{
+    char str[100];
+    
+    // Input string
+    scanf("%s", str);
 
     int left = 0;
-    int right = strlen(s) - 1;
-    int isPalindrome = 1;  // assume true
+    int right = strlen(str) - 1;
+    int palindrome = 1;
 
-    while (left < right) {
-        if (s[left] != s[right]) {
-            isPalindrome = 0;  // mismatch found
+    // Two-pointer comparison
+    while(left < right)
+    {
+        if(str[left] != str[right])
+        {
+            palindrome = 0;
             break;
         }
         left++;
         right--;
     }
 
-    if (isPalindrome) {
-        printf("YES\n");
-    } else {
-        printf("NO\n");
-    }
+    // Output result
+    if(palindrome)
+        printf("YES");
+    else
+        printf("NO");
 
     return 0;
 }

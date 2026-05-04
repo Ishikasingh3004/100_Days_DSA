@@ -1,46 +1,118 @@
+/*Problem: Find Intersection Point of Two Linked Lists - Implement using linked list with dynamic memory allocation.
+
+Input:
+- First line: integer n
+- Second line: n space-separated integers (first list)
+- Third line: integer m
+- Fourth line: m space-separated integers (second list)
+
+Output:
+- Print value of intersection node or 'No Intersection'
+
+Example:
+Input:
+5
+10 20 30 40 50
+4
+15 25 30 40 50
+
+Output:
+30
+
+Explanation:
+Calculate lengths, advance pointer in longer list, traverse both simultaneously. First common node is intersection.*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
+// Node structure
+struct Node
+{
     int data;
     struct Node* next;
 };
 
-int getLength(struct Node* head) {
-    int len = 0;
-    while (head != NULL) {
-        len++;
-        head = head->next;
-    }
-    return len;
+// Insert at end
+struct Node* insert(struct Node* head, int value)
+{
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if(head == NULL)
+        return newNode;
+
+    struct Node* temp = head;
+    while(temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    return head;
 }
 
-struct Node* findIntersection(struct Node* head1, struct Node* head2) {
-    int len1 = getLength(head1);
-    int len2 = getLength(head2);
-    
-    struct Node* ptr1 = head1;
-    struct Node* ptr2 = head2;
-    
-    // Advance longer list
-    if (len1 > len2) {
-        for (int i = 0; i < len1 - len2; i++) {
-            ptr1 = ptr1->next;
-        }
-    } else {
-        for (int i = 0; i < len2 - len1; i++) {
-            ptr2 = ptr2->next;
-        }
+// Find length
+int length(struct Node* head)
+{
+    int count = 0;
+    while(head != NULL)
+    {
+        count++;
+        head = head->next;
     }
-    
-    // Find intersection
-    while (ptr1 != NULL && ptr2 != NULL) {
-        if (ptr1->data == ptr2->data) {
-            return ptr1;
+    return count;
+}
+
+// Find intersection
+void findIntersection(struct Node* head1, struct Node* head2)
+{
+    int len1 = length(head1);
+    int len2 = length(head2);
+
+    int diff = abs(len1 - len2);
+
+    // Move longer list forward
+    if(len1 > len2)
+        while(diff--) head1 = head1->next;
+    else
+        while(diff--) head2 = head2->next;
+
+    // Traverse together
+    while(head1 != NULL && head2 != NULL)
+    {
+        if(head1->data == head2->data)
+        {
+            printf("%d", head1->data);
+            return;
         }
-        ptr1 = ptr1->next;
-        ptr2 = ptr2->next;
+        head1 = head1->next;
+        head2 = head2->next;
     }
-    
-    return NULL;
+
+    printf("No Intersection");
+}
+
+int main()
+{
+    int n, m;
+    struct Node *head1 = NULL, *head2 = NULL;
+
+    scanf("%d", &n);
+    for(int i = 0; i < n; i++)
+    {
+        int value;
+        scanf("%d", &value);
+        head1 = insert(head1, value);
+    }
+
+    scanf("%d", &m);
+    for(int i = 0; i < m; i++)
+    {
+        int value;
+        scanf("%d", &value);
+        head2 = insert(head2, value);
+    }
+
+    findIntersection(head1, head2);
+
+    return 0;
 }

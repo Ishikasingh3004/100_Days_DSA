@@ -6,43 +6,63 @@ Input:
 
 Output:
 - Print "Identity Matrix" if the matrix satisfies the condition
-- Otherwise, print "Not an Identity Matrix" */
+- Otherwise, print "Not an Identity Matrix"
+
+Example:
+Input:
+3
+1 0 0
+0 1 0
+0 0 1
+
+Output:
+Identity Matrix*/
+
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int n;
     scanf("%d", &n);
 
-    int matrix[100][100];
-    int isIdentity = 1;  // assume true
+    int matrix[n][n];
 
     // Input matrix
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
             scanf("%d", &matrix[i][j]);
         }
     }
 
-    // Check identity condition
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (i == j && matrix[i][j] != 1) {
-                isIdentity = 0;  // diagonal must be 1
+    int identity = 1;
+
+    // Check identity matrix condition
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            if(i == j && matrix[i][j] != 1)
+            {
+                identity = 0;
                 break;
             }
-            if (i != j && matrix[i][j] != 0) {
-                isIdentity = 0;  // non-diagonal must be 0
+            if(i != j && matrix[i][j] != 0)
+            {
+                identity = 0;
                 break;
             }
         }
-        if (!isIdentity) break;
+        if(identity == 0)
+            break;
     }
 
-    if (isIdentity) {
-        printf("Identity Matrix\n");
-    } else {
-        printf("Not an Identity Matrix\n");
-    }
+    // Output result
+    if(identity)
+        printf("Identity Matrix");
+    else
+        printf("Not an Identity Matrix");
 
     return 0;
 }

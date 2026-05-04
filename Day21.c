@@ -1,92 +1,66 @@
-/* Problem: Given an array of integers, count the number of subarrays whose sum is equal to zero.
+/*Problem: Create and Traverse Singly Linked List
 
 Input:
 - First line: integer n
-- Second line: n integers
+- Second line: n space-separated integers
 
 Output:
-- Print the count of subarrays having sum zero
+- Print the result
 
 Example:
 Input:
-6
-1 -1 2 -2 3 -3
+5
+10 20 30 40 50
 
 Output:
-6 */
+10 20 30 40 50*/
 #include <stdio.h>
 #include <stdlib.h>
 
-// Hash map node structure
-struct Node {
-    int prefixSum;
-    int count;
+// Define node structure
+struct Node
+{
+    int data;
     struct Node* next;
 };
 
-// Hash function
-int hash(int key, int size) {
-    if (key < 0) key = -key;
-    return key % size;
-}
-
-// Insert or update prefix sum in hash map
-void insert(struct Node** hashTable, int size, int prefixSum) {
-    int index = hash(prefixSum, size);
-    struct Node* temp = hashTable[index];
-    while (temp != NULL) {
-        if (temp->prefixSum == prefixSum) {
-            temp->count++;
-            return;
-        }
-        temp = temp->next;
-    }
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->prefixSum = prefixSum;
-    newNode->count = 1;
-    newNode->next = hashTable[index];
-    hashTable[index] = newNode;
-}
-
-// Get count of prefix sum from hash map
-int getCount(struct Node** hashTable, int size, int prefixSum) {
-    int index = hash(prefixSum, size);
-    struct Node* temp = hashTable[index];
-    while (temp != NULL) {
-        if (temp->prefixSum == prefixSum) {
-            return temp->count;
-        }
-        temp = temp->next;
-    }
-    return 0;
-}
-
-int main() {
+int main()
+{
     int n;
     scanf("%d", &n);
-    int arr[n];
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
+
+    struct Node *head = NULL, *temp = NULL, *newNode = NULL;
+
+    for(int i = 0; i < n; i++)
+    {
+        int value;
+        scanf("%d", &value);
+
+        // Create new node
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = value;
+        newNode->next = NULL;
+
+        // If first node
+        if(head == NULL)
+        {
+            head = newNode;
+            temp = newNode;
+        }
+        else
+        {
+            temp->next = newNode;
+            temp = newNode;
+        }
     }
 
-    int size = 10007; // hash table size
-    struct Node* hashTable[size];
-    for (int i = 0; i < size; i++) {
-        hashTable[i] = NULL;
+    // Traverse and print linked list
+    temp = head;
+    while(temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
     }
 
-    int prefixSum = 0;
-    int count = 0;
-
-    // Insert prefix sum 0 initially
-    insert(hashTable, size, 0);
-
-    for (int i = 0; i < n; i++) {
-        prefixSum += arr[i];
-        count += getCount(hashTable, size, prefixSum);
-        insert(hashTable, size, prefixSum);
-    }
-
-    printf("%d\n", count);
     return 0;
 }

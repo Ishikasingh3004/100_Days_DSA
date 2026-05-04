@@ -7,92 +7,107 @@ Input:
 
 Output:
 - Print the linked list elements after deletion, space-separated
-*/
+
+Example:
+Input:
+5
+10 20 30 40 50
+30
+
+Output:
+10 20 40 50
+
+Explanation:
+Traverse list, find first node with key, remove it by adjusting previous node's next pointer.*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define node structure
-struct Node {
+// Node structure
+struct Node
+{
     int data;
     struct Node* next;
 };
 
-// Function to create a new node
-struct Node* createNode(int value) {
+// Insert at end
+struct Node* insert(struct Node* head, int value)
+{
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = value;
     newNode->next = NULL;
-    return newNode;
-}
 
-// Function to insert node at the end of the list
-struct Node* insertEnd(struct Node* head, int value) {
-    struct Node* newNode = createNode(value);
-    if (head == NULL) {
+    if(head == NULL)
         return newNode;
-    }
+
     struct Node* temp = head;
-    while (temp->next != NULL) {
+    while(temp->next != NULL)
         temp = temp->next;
-    }
+
     temp->next = newNode;
     return head;
 }
 
-// Function to delete first occurrence of a key
-struct Node* deleteKey(struct Node* head, int key) {
+// Delete first occurrence of key
+struct Node* deleteKey(struct Node* head, int key)
+{
+    if(head == NULL)
+        return head;
+
     struct Node* temp = head;
     struct Node* prev = NULL;
 
-    // If head node itself holds the key
-    if (temp != NULL && temp->data == key) {
+    // If head itself contains key
+    if(temp->data == key)
+    {
         head = temp->next;
         free(temp);
         return head;
     }
 
-    // Search for the key
-    while (temp != NULL && temp->data != key) {
+    // Traverse list
+    while(temp != NULL && temp->data != key)
+    {
         prev = temp;
         temp = temp->next;
     }
 
-    // If key not found
-    if (temp == NULL) return head;
-
-    // Unlink the node and free memory
-    prev->next = temp->next;
-    free(temp);
+    // If key found
+    if(temp != NULL)
+    {
+        prev->next = temp->next;
+        free(temp);
+    }
 
     return head;
 }
 
-// Function to traverse and print the linked list
-void traverseList(struct Node* head) {
-    struct Node* temp = head;
-    while (temp != NULL) {
-        printf("%d ", temp->data);
-        temp = temp->next;
-    }
-    printf("\n");
-}
-
-int main() {
-    int n, key, value;
+int main()
+{
+    int n;
     scanf("%d", &n);
 
     struct Node* head = NULL;
 
-    for (int i = 0; i < n; i++) {
+    for(int i = 0; i < n; i++)
+    {
+        int value;
         scanf("%d", &value);
-        head = insertEnd(head, value);
+        head = insert(head, value);
     }
 
+    int key;
     scanf("%d", &key);
 
     head = deleteKey(head, key);
 
-    traverseList(head);
+    // Print updated list
+    struct Node* temp = head;
+    while(temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
 
     return 0;
 }

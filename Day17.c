@@ -6,41 +6,52 @@ Input:
 
 Output:
 - Print the maximum and minimum elements
-*/
+
+Example:
+Input:
+6
+3 5 1 9 2 8
+
+Output:
+Max: 9
+Min: 1*/
+
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int n;
     scanf("%d", &n);
 
-    int arr[100], freq[100];
+    int arr[n];
 
-    // Input array
-    for (int i = 0; i < n; i++) {
+    // Input array elements
+    for(int i = 0; i < n; i++)
+    {
         scanf("%d", &arr[i]);
-        freq[i] = -1;  // initialize frequency array
     }
 
-    // Count frequencies
-    for (int i = 0; i < n; i++) {
-        if (freq[i] != -1) continue;  // already counted
+    // Assume first element is max and min
+    int max = arr[0];
+    int min = arr[0];
 
-        int count = 1;
-        for (int j = i + 1; j < n; j++) {
-            if (arr[i] == arr[j]) {
-                count++;
-                freq[j] = 0;  // mark as counted
-            }
+    // Find max and min
+    for(int i = 1; i < n; i++)
+    {
+        if(arr[i] > max)
+        {
+            max = arr[i];
         }
-        freq[i] = count;
-    }
 
-    // Print results
-    for (int i = 0; i < n; i++) {
-        if (freq[i] != 0) {
-            printf("%d:%d\n", arr[i], freq[i]);
+        if(arr[i] < min)
+        {
+            min = arr[i];
         }
     }
+
+    // Output result
+    printf("Max: %d\n", max);
+    printf("Min: %d", min);
 
     return 0;
 }

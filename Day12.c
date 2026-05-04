@@ -6,45 +6,97 @@ Input:
 
 Output:
 - Print "Symmetric Matrix" if the given matrix is symmetric
-- Otherwise, print "Not a Symmetric Matrix" */
+- Otherwise, print "Not a Symmetric Matrix"
+
+Example:
+Input:
+3 3
+1 2 3
+2 4 5
+3 5 6
+
+Output:
+Symmetric Matrix
+
+Explanation:
+The matrix is square (3 × 3) and for every i and j, element[i][j] = element[j][i].
+
+Test Cases:
+
+Test Case 1:
+Input:
+2 2
+1 2
+2 1
+Output:
+Symmetric Matrix
+
+Test Case 2:
+Input:
+3 3
+1 0 1
+2 3 4
+1 4 5
+Output:
+Not a Symmetric Matrix
+
+Test Case 3:
+Input:
+2 3
+1 2 3
+4 5 6
+Output:
+Not a Symmetric Matrix*/
+
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int m, n;
+
+    // Input rows and columns
     scanf("%d %d", &m, &n);
 
-    int matrix[100][100];
+    int matrix[m][n];
 
-    // Input matrix
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
+    // Input matrix elements
+    for(int i = 0; i < m; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
             scanf("%d", &matrix[i][j]);
         }
     }
 
-    // Check if square
-    if (m != n) {
-        printf("Not a Symmetric Matrix\n");
+    // Check if square matrix
+    if(m != n)
+    {
+        printf("Not a Symmetric Matrix");
         return 0;
     }
 
+    int symmetric = 1;
+
     // Check symmetry
-    int isSymmetric = 1;
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if (matrix[i][j] != matrix[j][i]) {
-                isSymmetric = 0;
+    for(int i = 0; i < m; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            if(matrix[i][j] != matrix[j][i])
+            {
+                symmetric = 0;
                 break;
             }
         }
-        if (!isSymmetric) break;
+        if(symmetric == 0)
+            break;
     }
 
-    if (isSymmetric) {
-        printf("Symmetric Matrix\n");
-    } else {
-        printf("Not a Symmetric Matrix\n");
-    }
+    // Print result
+    if(symmetric)
+        printf("Symmetric Matrix");
+    else
+        printf("Not a Symmetric Matrix");
 
     return 0;
 }

@@ -7,28 +7,59 @@ Input:
 
 Output:
 - Print the rotated array
-*/
+
+Example:
+Input:
+5
+1 2 3 4 5
+2
+
+Output:
+4 5 1 2 3*/
 #include <stdio.h>
 
-int main() {
-    int n, k;
+// Function to reverse part of array
+void reverse(int arr[], int start, int end)
+{
+    while(start < end)
+    {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+int main()
+{
+    int n;
     scanf("%d", &n);
 
-    int arr[100];
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
+    int arr[n];
 
+    // Input array
+    for(int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    int k;
     scanf("%d", &k);
 
-    // Normalize k in case it's larger than n
+    // If k > n
     k = k % n;
 
-    // Print rotated array
-    for (int i = 0; i < n; i++) {
-        int newIndex = (i + k) % n;
-        printf("%d ", arr[(n - k + i) % n]);
-    }
+    // Step 1: Reverse whole array
+    reverse(arr, 0, n - 1);
+
+    // Step 2: Reverse first k elements
+    reverse(arr, 0, k - 1);
+
+    // Step 3: Reverse remaining elements
+    reverse(arr, k, n - 1);
+
+    // Print result
+    for(int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
 
     return 0;
 }

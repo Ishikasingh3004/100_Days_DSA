@@ -24,40 +24,87 @@ Output:
 10 10 10
 
 Explanation:
-Each element of the result matrix is the sum of the corresponding elements from the two input matrices. */
+Each element of the result matrix is the sum of the corresponding elements from the two input matrices.
+
+Test Cases:
+
+Test Case 1:
+Input:
+2 2
+1 2
+3 4
+5 6
+7 8
+Output:
+6 8
+10 12
+
+Test Case 2:
+Input:
+1 3
+10 20 30
+1 2 3
+Output:
+11 22 33
+
+Test Case 3:
+Input:
+3 1
+1
+2
+3
+4
+5
+6
+Output:
+5
+7
+9*/
+
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int m, n;
+
+    // Input rows and columns
     scanf("%d %d", &m, &n);
 
-    int A[100][100], B[100][100], Sum[100][100];
+    int A[m][n], B[m][n], sum[m][n];
 
     // Input first matrix
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
+    for(int i = 0; i < m; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
             scanf("%d", &A[i][j]);
         }
     }
 
     // Input second matrix
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
+    for(int i = 0; i < m; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
             scanf("%d", &B[i][j]);
         }
     }
 
-    // Calculate sum
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            Sum[i][j] = A[i][j] + B[i][j];
+    // Add matrices
+    for(int i = 0; i < m; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            sum[i][j] = A[i][j] + B[i][j];
         }
     }
 
-    // Print result
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            printf("%d ", Sum[i][j]);
+    // Print result matrix
+    for(int i = 0; i < m; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            printf("%d ", sum[i][j]);
         }
         printf("\n");
     }

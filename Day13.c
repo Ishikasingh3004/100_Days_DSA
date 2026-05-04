@@ -5,18 +5,54 @@ Input:
 - Next r lines: c integers each representing the matrix elements
 
 Output:
-- Print all visited elements in the order of traversal, separated by spaces*/
+- Print all visited elements in the order of traversal, separated by spaces
+
+Example:
+Input:
+3 3
+1 2 3
+4 5 6
+7 8 9
+
+Output:
+1 2 3 6 9 8 7 4 5
+
+Explanation:
+The traversal begins along the top row, proceeds down the rightmost column, then moves across the bottom row in reverse, and finally goes up the leftmost column. The same pattern repeats for the inner submatrix.
+
+Test Cases:
+
+Test Case 1:
+Input:
+2 3
+1 2 3
+4 5 6
+Output:
+1 2 3 6 5 4
+
+Test Case 2:
+Input:
+3 1
+7
+8
+9
+Output:
+7 8 9*/
+
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int r, c;
     scanf("%d %d", &r, &c);
 
-    int matrix[100][100];
+    int matrix[r][c];
 
     // Input matrix
-    for (int i = 0; i < r; i++) {
-        for (int j = 0; j < c; j++) {
+    for(int i = 0; i < r; i++)
+    {
+        for(int j = 0; j < c; j++)
+        {
             scanf("%d", &matrix[i][j]);
         }
     }
@@ -25,30 +61,37 @@ int main() {
     int left = 0, right = c - 1;
 
     // Spiral traversal
-    while (top <= bottom && left <= right) {
-        // Traverse top row
-        for (int j = left; j <= right; j++) {
-            printf("%d ", matrix[top][j]);
+    while(top <= bottom && left <= right)
+    {
+        // Print top row
+        for(int i = left; i <= right; i++)
+        {
+            printf("%d ", matrix[top][i]);
         }
         top++;
 
-        // Traverse right column
-        for (int i = top; i <= bottom; i++) {
+        // Print right column
+        for(int i = top; i <= bottom; i++)
+        {
             printf("%d ", matrix[i][right]);
         }
         right--;
 
-        // Traverse bottom row (if still valid)
-        if (top <= bottom) {
-            for (int j = right; j >= left; j--) {
-                printf("%d ", matrix[bottom][j]);
+        // Print bottom row
+        if(top <= bottom)
+        {
+            for(int i = right; i >= left; i--)
+            {
+                printf("%d ", matrix[bottom][i]);
             }
             bottom--;
         }
 
-        // Traverse left column (if still valid)
-        if (left <= right) {
-            for (int i = bottom; i >= top; i--) {
+        // Print left column
+        if(left <= right)
+        {
+            for(int i = bottom; i >= top; i--)
+            {
                 printf("%d ", matrix[i][left]);
             }
             left++;

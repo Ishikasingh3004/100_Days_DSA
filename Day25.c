@@ -6,92 +6,79 @@ Input:
 - Third line: integer key (element to be counted)
 
 Output:
-- Print the number of times the key appears in the linked list*/
+- Print the number of times the key appears in the linked list
+
+Example:
+Input:
+6
+10 20 30 20 40 20
+20
+
+Output:
+3
+
+Explanation:
+Traverse the linked list from head to end. Each time a node's data matches the given key, increment a counter. After traversal, print the final count.*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define node structure
-struct Node {
+// Node structure
+struct Node
+{
     int data;
     struct Node* next;
 };
 
-// Function to create a new node
-struct Node* createNode(int value) {
+// Insert at end
+struct Node* insert(struct Node* head, int value)
+{
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = value;
     newNode->next = NULL;
-    return newNode;
-}
 
-// Function to insert node at the end of the list
-struct Node* insertEnd(struct Node* head, int value) {
-    struct Node* newNode = createNode(value);
-    if (head == NULL) {
+    if(head == NULL)
         return newNode;
-    }
+
     struct Node* temp = head;
-    while (temp->next != NULL) {
+    while(temp->next != NULL)
         temp = temp->next;
-    }
+
     temp->next = newNode;
     return head;
 }
 
-// Function to delete first occurrence of a key
-struct Node* deleteKey(struct Node* head, int key) {
-    struct Node* temp = head;
-    struct Node* prev = NULL;
-
-    // If head node itself holds the key
-    if (temp != NULL && temp->data == key) {
-        head = temp->next;
-        free(temp);
-        return head;
-    }
-
-    // Search for the key
-    while (temp != NULL && temp->data != key) {
-        prev = temp;
-        temp = temp->next;
-    }
-
-    // If key not found
-    if (temp == NULL) return head;
-
-    // Unlink the node and free memory
-    prev->next = temp->next;
-    free(temp);
-
-    return head;
-}
-
-// Function to traverse and print the linked list
-void traverseList(struct Node* head) {
-    struct Node* temp = head;
-    while (temp != NULL) {
-        printf("%d ", temp->data);
-        temp = temp->next;
-    }
-    printf("\n");
-}
-
-int main() {
-    int n, key, value;
+int main()
+{
+    int n;
     scanf("%d", &n);
 
     struct Node* head = NULL;
 
-    for (int i = 0; i < n; i++) {
+    // Create linked list
+    for(int i = 0; i < n; i++)
+    {
+        int value;
         scanf("%d", &value);
-        head = insertEnd(head, value);
+        head = insert(head, value);
     }
 
+    int key;
     scanf("%d", &key);
 
-    head = deleteKey(head, key);
+    // Count occurrences
+    int count = 0;
+    struct Node* temp = head;
 
-    traverseList(head);
+    while(temp != NULL)
+    {
+        if(temp->data == key)
+            count++;
+
+        temp = temp->next;
+    }
+
+    printf("%d", count);
 
     return 0;
 }
